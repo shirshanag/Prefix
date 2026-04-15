@@ -10,6 +10,9 @@ Our mission is simple: reduce waste, save money, and make buying and selling eff
 Platform-Wide
 
 🔑 User Authentication — Sign up / log in via email or social accounts (Google, Facebook)
+
 📱 Mobile Responsive — Fully optimized for web and mobile browsers
+
 🌐 Multi-Category Support — Electronics, clothing, furniture, books, and more
+
 🌿 Sustainability Score — Each second-hand purchase earns eco-impact points
