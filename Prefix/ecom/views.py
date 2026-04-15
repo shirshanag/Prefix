@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import user_data
 # Create your views here.
@@ -30,3 +30,13 @@ def signup(request):
         data=user_data(name=a1,email=a2,contact=a3,password=a4)
         data.save()
     return render(request,'signup.html')
+def login(request):
+    if request.method=='POST':
+        b1=request.POST['email']
+        b2=request.POST['password']
+        obj=user_data.objects.filter(email=b1,password=b2)
+        if obj:
+            return redirect("/index/")
+        else:
+            return HttpResponse("Invalid Response")
+    return render(request,'login.html')

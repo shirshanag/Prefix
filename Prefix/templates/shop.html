@@ -1,274 +1,466 @@
 <!DOCTYPE html>
-<html>
-   <head>
-      <!-- basic -->
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <!-- mobile metas -->
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-      <!-- site metas -->
-      <title>Shop</title>
-      <meta name="keywords" content="">
-      <meta name="description" content="">
-      <meta name="author" content="">
-      <!-- bootstrap css -->
-      <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
-      <!-- style css -->
-      <link rel="stylesheet" type="text/css" href="/static/css/style.css">
-      <!-- Responsive-->
-      <link rel="stylesheet" href="/static/css/responsive.css">
-      <!-- fevicon -->
-      <link rel="icon" href="/static/images/fevicon.png" type="image/gif" />
-      <!-- font css -->
-      <link href="https://fonts.googleapis.com/css2?family=Sen:wght@400;700;800&display=swap" rel="stylesheet">
-      <!-- Scrollbar Custom CSS -->
-      <link rel="stylesheet" href="/static/css/jquery.mCustomScrollbar.min.css">
-      <!-- Tweaks for older IEs-->
-      <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-   </head>
-   <body>
-      <div class="header_section header_bg">
-         <div class="container-fluid">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-               <a class="navbar-brand"href="index.html"><img src="/static/images/logo.png"></a>
-               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-               <span class="navbar-toggler-icon"></span>
-               </button>
-               <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul class="navbar-nav ml-auto">
-                     <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'index' %}">Home</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'about' %}">About</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'pricing' %}">Pricing Plans</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'shop' %}">Shop</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'services' %}">Services</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="#">Blog</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
-                     </li>
-                  </ul>
-                  <form class="form-inline my-2 my-lg-0">
-                     <div class="login_bt">
-                        <ul>
-                           <li class="active"><a href="#">Buy Now</a></li>
-                           <li><a href="#">Login</a></li>
-                           <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                        </ul>
-                     </div>
-                  </form>
-               </div>
-            </nav>
-         </div>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PREFIX — Shop</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --mint: #d4f5ec;
+    --mint-dark: #a0e8d4;
+    --teal: #1D9E75;
+    --teal-dark: #0F6E56;
+    --dark: #1a2e2b;
+    --text: #1a2e2b;
+    --muted: #5a7a72;
+    --white: #ffffff;
+    --light-bg: #f4faf8;
+    --border: #c5e8dc;
+  }
+
+  body { font-family: 'Segoe UI', sans-serif; color: var(--dark); background: var(--white); }
+
+  /* NAV */
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 60px; background: var(--white);
+    border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100;
+  }
+  .logo { font-size: 22px; font-weight: 800; letter-spacing: 2px; color: var(--dark); text-decoration: none; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { text-decoration: none; font-size: 13px; font-weight: 600; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase; }
+  .nav-links a:hover, .nav-links a.active { color: var(--dark); }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .btn-buy {
+    background: var(--teal); color: var(--white); padding: 9px 22px;
+    border-radius: 6px; font-size: 13px; font-weight: 700; text-decoration: none;
+    letter-spacing: 0.5px; text-transform: uppercase;
+  }
+  .btn-login {
+    background: none; border: none; font-size: 13px; font-weight: 600;
+    color: var(--muted); cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .cart-icon {
+    background: var(--mint); border: none; border-radius: 50%; width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative;
+  }
+  .cart-badge {
+    position: absolute; top: -4px; right: -4px; background: var(--teal);
+    color: white; border-radius: 50%; width: 16px; height: 16px;
+    font-size: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700;
+  }
+
+  /* HERO */
+  .hero {
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 520px; background: var(--mint);
+  }
+  .hero-left {
+    padding: 80px 60px; display: flex; flex-direction: column; justify-content: center;
+    background: linear-gradient(135deg, var(--mint) 60%, var(--white) 100%);
+  }
+  .hero-tag {
+    display: inline-block; background: var(--teal); color: white;
+    font-size: 11px; font-weight: 700; padding: 5px 14px; border-radius: 20px;
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; width: fit-content;
+  }
+  .hero h1 {
+    font-size: 52px; font-weight: 900; line-height: 1.05; color: var(--dark);
+    text-transform: uppercase; margin-bottom: 20px;
+  }
+  .hero p { font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 420px; margin-bottom: 36px; }
+  .hero-btns { display: flex; gap: 14px; align-items: center; }
+  .btn-primary {
+    background: var(--dark); color: white; padding: 14px 32px;
+    border-radius: 6px; font-size: 14px; font-weight: 700; text-decoration: none;
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+  .btn-play {
+    width: 50px; height: 50px; border-radius: 50%; background: var(--dark);
+    display: flex; align-items: center; justify-content: center; cursor: pointer; border: none;
+  }
+  .btn-play svg { fill: white; margin-left: 3px; }
+  .hero-right {
+    background: var(--white); display: flex; align-items: center; justify-content: center;
+    padding: 40px; position: relative; overflow: hidden;
+  }
+  .hero-right::before {
+    content: ''; position: absolute; top: -60px; left: -60px;
+    width: 300px; height: 300px; background: var(--mint); border-radius: 50%; opacity: 0.5;
+  }
+  .hero-img { width: 100%; max-width: 420px; position: relative; z-index: 1; }
+
+  /* STATS */
+  .stats {
+    display: flex; background: var(--dark); padding: 28px 60px; gap: 0;
+  }
+  .stat { flex: 1; text-align: center; border-right: 1px solid rgba(255,255,255,0.1); }
+  .stat:last-child { border-right: none; }
+  .stat-num { font-size: 28px; font-weight: 900; color: var(--mint-dark); }
+  .stat-label { font-size: 12px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+  /* FILTER BAR */
+  .filter-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 28px 60px; background: var(--light-bg); border-bottom: 1px solid var(--border);
+  }
+  .filter-tabs { display: flex; gap: 8px; }
+  .filter-tab {
+    padding: 8px 20px; border-radius: 20px; font-size: 13px; font-weight: 600;
+    border: 1.5px solid var(--border); background: white; cursor: pointer; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .filter-tab.active { background: var(--teal); color: white; border-color: var(--teal); }
+  .sort-select {
+    padding: 9px 16px; border-radius: 6px; border: 1.5px solid var(--border);
+    font-size: 13px; color: var(--muted); background: white; cursor: pointer;
+  }
+
+  /* PRODUCTS GRID */
+  .products-section { padding: 50px 60px; background: var(--white); }
+  .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 36px; }
+  .section-title { font-size: 28px; font-weight: 900; text-transform: uppercase; color: var(--dark); }
+  .section-title span { color: var(--teal); }
+  .view-all {
+    font-size: 13px; font-weight: 700; color: var(--teal); text-decoration: none;
+    text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--teal);
+    padding-bottom: 2px;
+  }
+  .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .product-card {
+    border-radius: 14px; overflow: hidden; border: 1.5px solid var(--border);
+    background: var(--white); transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(29,158,117,0.12); }
+  .product-img {
+    height: 200px; background: var(--mint); display: flex; align-items: center;
+    justify-content: center; position: relative; overflow: hidden;
+  }
+  .product-badge {
+    position: absolute; top: 12px; left: 12px; background: var(--teal); color: white;
+    font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase;
+  }
+  .product-badge.sale { background: #E24B4A; }
+  .product-emoji { font-size: 64px; }
+  .product-info { padding: 16px; }
+  .product-cat { font-size: 11px; color: var(--teal); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .product-name { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+  .product-desc { font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 14px; }
+  .product-footer { display: flex; justify-content: space-between; align-items: center; }
+  .product-price { font-size: 20px; font-weight: 900; color: var(--dark); }
+  .product-price .old { font-size: 13px; color: var(--muted); text-decoration: line-through; font-weight: 400; margin-left: 6px; }
+  .add-btn {
+    background: var(--teal); color: white; border: none; border-radius: 8px;
+    width: 36px; height: 36px; font-size: 20px; cursor: pointer; display: flex;
+    align-items: center; justify-content: center; font-weight: 700;
+  }
+  .add-btn:hover { background: var(--teal-dark); }
+
+  /* BANNER */
+  .promo-banner {
+    margin: 0 60px 50px; background: var(--dark); border-radius: 16px;
+    padding: 48px 60px; display: flex; justify-content: space-between; align-items: center;
+  }
+  .promo-text h2 { font-size: 32px; font-weight: 900; color: white; text-transform: uppercase; margin-bottom: 10px; }
+  .promo-text h2 span { color: var(--mint-dark); }
+  .promo-text p { color: rgba(255,255,255,0.6); font-size: 15px; }
+  .promo-btn {
+    background: var(--teal); color: white; padding: 14px 32px;
+    border-radius: 8px; font-size: 14px; font-weight: 700; text-decoration: none;
+    text-transform: uppercase; letter-spacing: 1px; white-space: nowrap;
+  }
+
+  /* FEATURED */
+  .featured-section { padding: 0 60px 60px; }
+  .featured-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .featured-card {
+    border-radius: 16px; padding: 40px; display: flex; gap: 28px; align-items: center;
+    border: 1.5px solid var(--border);
+  }
+  .featured-card.green-bg { background: var(--mint); }
+  .featured-card.dark-bg { background: var(--dark); }
+  .featured-icon { font-size: 72px; flex-shrink: 0; }
+  .featured-info h3 { font-size: 20px; font-weight: 900; text-transform: uppercase; margin-bottom: 8px; }
+  .featured-card.dark-bg .featured-info h3 { color: white; }
+  .featured-card.dark-bg .featured-info p { color: rgba(255,255,255,0.6); }
+  .featured-card.dark-bg .featured-info .price { color: var(--mint-dark); }
+  .featured-info p { font-size: 13px; color: var(--muted); margin-bottom: 16px; line-height: 1.5; }
+  .featured-info .price { font-size: 26px; font-weight: 900; color: var(--dark); margin-bottom: 16px; display: block; }
+  .btn-shop {
+    display: inline-block; padding: 10px 24px; border-radius: 6px; font-size: 13px;
+    font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .btn-shop.dark { background: var(--dark); color: white; }
+  .btn-shop.light { background: white; color: var(--dark); }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark); padding: 50px 60px 28px; margin-top: 0;
+  }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+  .footer-brand .logo { color: var(--mint-dark); display: block; margin-bottom: 14px; }
+  .footer-brand p { color: rgba(255,255,255,0.5); font-size: 13px; line-height: 1.7; max-width: 240px; }
+  .footer-col h4 { color: white; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+  .footer-col a { display: block; color: rgba(255,255,255,0.5); font-size: 13px; margin-bottom: 10px; text-decoration: none; }
+  .footer-col a:hover { color: var(--mint-dark); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-bottom p { color: rgba(255,255,255,0.3); font-size: 12px; }
+
+  /* CART TOAST */
+  .toast {
+    position: fixed; bottom: 30px; right: 30px; background: var(--teal);
+    color: white; padding: 14px 24px; border-radius: 10px; font-size: 14px;
+    font-weight: 600; opacity: 0; transform: translateY(10px);
+    transition: opacity 0.3s, transform 0.3s; z-index: 999; pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">PREFIX</a>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Pricing Plans</a></li>
+    <li><a href="#" class="active">Shop</a></li>
+    <li><a href="#">Services</a></li>
+    <li><a href="#">Blog</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="#" class="btn-buy">Buy Now</a>
+    <button class="btn-login">Login</button>
+    <button class="cart-icon" onclick="openCart()">
+      <svg width="18" height="18" fill="none" stroke="#1D9E75" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 01-8 0"/>
+      </svg>
+      <span class="cart-badge" id="cart-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <span class="hero-tag">New Arrivals 2025</span>
+    <h1>Sell Every<br>Old Things &<br>Buy New</h1>
+    <p>Discover thousands of products at unbeatable prices. From electronics to fashion — everything you need, delivered fast.</p>
+    <div class="hero-btns">
+      <a href="#shop" class="btn-primary">Read More</a>
+      <button class="btn-play">
+        <svg width="14" height="16" viewBox="0 0 14 16"><polygon points="0,0 14,8 0,16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="hero-right">
+    <svg class="hero-img" viewBox="0 0 420 340" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="210" cy="170" r="140" fill="#d4f5ec" opacity="0.5"/>
+      <rect x="155" y="60" width="110" height="130" rx="14" fill="#1D9E75" opacity="0.15"/>
+      <rect x="165" y="70" width="90" height="110" rx="10" fill="white" stroke="#1D9E75" stroke-width="1.5"/>
+      <rect x="175" y="82" width="70" height="48" rx="6" fill="#d4f5ec"/>
+      <text x="210" y="112" text-anchor="middle" font-size="28">🛍</text>
+      <rect x="175" y="140" width="50" height="6" rx="3" fill="#1D9E75" opacity="0.4"/>
+      <rect x="175" y="152" width="35" height="5" rx="2" fill="#1D9E75" opacity="0.2"/>
+      <rect x="175" y="163" width="28" height="10" rx="5" fill="#1D9E75"/>
+      <text x="189" y="171" text-anchor="middle" font-size="6" fill="white" font-weight="bold">ADD</text>
+      <!-- floating items -->
+      <circle cx="100" cy="100" r="28" fill="white" stroke="#1D9E75" stroke-width="1.5"/>
+      <text x="100" y="108" text-anchor="middle" font-size="22">📦</text>
+      <circle cx="320" cy="120" r="24" fill="white" stroke="#1D9E75" stroke-width="1.5"/>
+      <text x="320" y="128" text-anchor="middle" font-size="18">⭐</text>
+      <circle cx="310" cy="230" r="28" fill="white" stroke="#1D9E75" stroke-width="1.5"/>
+      <text x="310" y="238" text-anchor="middle" font-size="22">🎁</text>
+      <circle cx="95" cy="240" r="22" fill="#1D9E75"/>
+      <text x="95" y="248" text-anchor="middle" font-size="16">🚚</text>
+    </svg>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="stat-num">50K+</div><div class="stat-label">Products</div></div>
+  <div class="stat"><div class="stat-num">120K</div><div class="stat-label">Customers</div></div>
+  <div class="stat"><div class="stat-num">98%</div><div class="stat-label">Satisfaction</div></div>
+  <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">Support</div></div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar" id="shop">
+  <div class="filter-tabs">
+    <button class="filter-tab active" onclick="filterProducts(this,'all')">All</button>
+    <button class="filter-tab" onclick="filterProducts(this,'electronics')">Electronics</button>
+    <button class="filter-tab" onclick="filterProducts(this,'fashion')">Fashion</button>
+    <button class="filter-tab" onclick="filterProducts(this,'home')">Home</button>
+    <button class="filter-tab" onclick="filterProducts(this,'sports')">Sports</button>
+  </div>
+  <select class="sort-select" onchange="sortProducts(this.value)">
+    <option value="default">Sort: Featured</option>
+    <option value="price-asc">Price: Low to High</option>
+    <option value="price-desc">Price: High to Low</option>
+    <option value="newest">Newest First</option>
+  </select>
+</div>
+
+<!-- PRODUCTS -->
+<section class="products-section">
+  <div class="section-header">
+    <h2 class="section-title">Featured <span>Products</span></h2>
+    <a href="#" class="view-all">View All</a>
+  </div>
+  <div class="products-grid" id="products-grid">
+  </div>
+</section>
+
+<!-- PROMO BANNER -->
+<div class="promo-banner">
+  <div class="promo-text">
+    <h2>Mega Sale — Up to <span>70% OFF</span></h2>
+    <p>Limited time offer on selected items. Grab your deal before it's gone!</p>
+  </div>
+  <a href="#" class="promo-btn">Shop the Sale</a>
+</div>
+
+<!-- FEATURED -->
+<section class="featured-section">
+  <div class="section-header" style="margin-bottom:28px;">
+    <h2 class="section-title">Top <span>Categories</span></h2>
+  </div>
+  <div class="featured-grid">
+    <div class="featured-card green-bg">
+      <div class="featured-icon">💻</div>
+      <div class="featured-info">
+        <h3>Electronics</h3>
+        <p>Latest gadgets, laptops, phones, and accessories at the best prices.</p>
+        <span class="price">From $49</span>
+        <a href="#" class="btn-shop dark">Shop Now</a>
       </div>
-      <!-- header section end -->
-      <!-- shop section start -->
-      <div class="blog_section layout_padding">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-12">
-                  <h1 class="blog_taital">PREMIUM ADVERTISEMENT</h1>
-               </div>
-            </div>
-            <div class="blog_section_2">
-               <div id="main_slider" class="carousel slide" data-ride="carousel">
-                  <div class="carousel-inner">
-                     <div class="carousel-item active">
-                        <div class="row">
-                           <div class="col-md-4">
-                              <div class="blog_img"><img src="/static/images/blog-img.png"></div>
-                              <h6 class="number_text">01</h6>
-                              <div class="callnow_btn">
-                                 <div class="chat_bt"><a href="#">Chat Now</a></div>
-                                 <div class="call_bt active"><a href="#">Call Now</a></div>
-                              </div>
-                           </div>
-                           <div class="col-md-4">
-                              <div class="blog_img"><img src="/static/images/blog-img1.png"></div>
-                              <h6 class="number_text">02</h6>
-                              <div class="callnow_btn">
-                                 <div class="chat_bt"><a href="#">Chat Now</a></div>
-                                 <div class="call_bt active"><a href="#">Call Now</a></div>
-                              </div>
-                           </div>
-                           <div class="col-md-4">
-                              <div class="blog_img"><img src="/static/images/blog-img2.png"></div>
-                              <h6 class="number_text">03</h6>
-                              <div class="callnow_btn">
-                                 <div class="chat_bt"><a href="#">Chat Now</a></div>
-                                 <div class="call_bt active"><a href="#">Call Now</a></div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="carousel-item">
-                        <div class="row">
-                           <div class="col-md-4">
-                              <div class="blog_img"><img src="/static/images/blog-img.png"></div>
-                              <h6 class="number_text">01</h6>
-                              <div class="callnow_btn">
-                                 <div class="chat_bt"><a href="#">Chat Now</a></div>
-                                 <div class="call_bt active"><a href="#">Call Now</a></div>
-                              </div>
-                           </div>
-                           <div class="col-md-4">
-                              <div class="blog_img"><img src="/static/images/blog-img1.png"></div>
-                              <h6 class="number_text">02</h6>
-                              <div class="callnow_btn">
-                                 <div class="chat_bt"><a href="#">Chat Now</a></div>
-                                 <div class="call_bt active"><a href="#">Call Now</a></div>
-                              </div>
-                           </div>
-                           <div class="col-md-4">
-                              <div class="blog_img"><img src="/static/images/blog-img2.png"></div>
-                              <h6 class="number_text">03</h6>
-                              <div class="callnow_btn">
-                                 <div class="chat_bt"><a href="#">Chat Now</a></div>
-                                 <div class="call_bt active"><a href="#">Call Now</a></div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="carousel-item">
-                        <div class="row">
-                           <div class="col-md-4">
-                              <div class="blog_img"><img src="/static/images/blog-img.png"></div>
-                              <h6 class="number_text">01</h6>
-                              <div class="callnow_btn">
-                                 <div class="chat_bt"><a href="#">Chat Now</a></div>
-                                 <div class="call_bt active"><a href="#">Call Now</a></div>
-                              </div>
-                           </div>
-                           <div class="col-md-4">
-                              <div class="blog_img"><img src="/static/images/blog-img1.png"></div>
-                              <h6 class="number_text">02</h6>
-                              <div class="callnow_btn">
-                                 <div class="chat_bt"><a href="#">Chat Now</a></div>
-                                 <div class="call_bt active"><a href="#">Call Now</a></div>
-                              </div>
-                           </div>
-                           <div class="col-md-4">
-                              <div class="blog_img"><img src="/static/images/blog-img2.png"></div>
-                              <h6 class="number_text">03</h6>
-                              <div class="callnow_btn">
-                                 <div class="chat_bt"><a href="#">Chat Now</a></div>
-                                 <div class="call_bt active"><a href="#">Call Now</a></div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <a class="carousel-control-prev" href="#main_slider" role="button" data-slide="prev">
-                  <i class="fa fa-angle-left"></i>
-                  </a>
-                  <a class="carousel-control-next" href="#main_slider" role="button" data-slide="next">
-                  <i class="fa fa-angle-right"></i>
-                  </a>
-               </div>
-            </div>
-         </div>
+    </div>
+    <div class="featured-card dark-bg">
+      <div class="featured-icon">👟</div>
+      <div class="featured-info">
+        <h3>Fashion</h3>
+        <p>Trending styles for every occasion. Clothes, shoes, and accessories.</p>
+        <span class="price">From $19</span>
+        <a href="#" class="btn-shop light">Shop Now</a>
       </div>
-      <!-- shop section end -->
-      <!-- footer section start -->
-      <div class="footer_section layout_padding margin_top90">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-12">
-                  <div class="footer_logo"><img src="/static/images/footer-logo.png"></div>
-               </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="logo">PREFIX</a>
+      <p>Your one-stop shop for everything you need. Quality products, fast delivery, unbeatable prices.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <a href="#">Electronics</a>
+      <a href="#">Fashion</a>
+      <a href="#">Home & Garden</a>
+      <a href="#">Sports</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About Us</a>
+      <a href="#">Careers</a>
+      <a href="#">Blog</a>
+      <a href="#">Press</a>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <a href="#">Help Center</a>
+      <a href="#">Track Order</a>
+      <a href="#">Returns</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 PREFIX. All rights reserved.</p>
+    <p>Privacy Policy · Terms of Service</p>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast">Item added to cart!</div>
+
+<script>
+  let cartCount = 0;
+  let currentFilter = 'all';
+
+  const products = [
+    { id:1, name:'Wireless Headphones', cat:'electronics', emoji:'🎧', price:79, old:129, badge:'New', desc:'Premium sound with ANC technology.' },
+    { id:2, name:'Running Shoes', cat:'fashion', emoji:'👟', price:59, old:99, badge:'Sale', desc:'Lightweight, breathable design.' },
+    { id:3, name:'Smart Watch', cat:'electronics', emoji:'⌚', price:149, old:199, badge:'Hot', desc:'Health tracking & notifications.' },
+    { id:4, name:'Coffee Maker', cat:'home', emoji:'☕', price:49, old:null, badge:null, desc:'Brew perfect coffee every time.' },
+    { id:5, name:'Yoga Mat', cat:'sports', emoji:'🧘', price:29, old:45, badge:'Sale', desc:'Non-slip, eco-friendly material.' },
+    { id:6, name:'Bluetooth Speaker', cat:'electronics', emoji:'🔊', price:89, old:null, badge:'New', desc:'360° sound, waterproof design.' },
+    { id:7, name:'Leather Jacket', cat:'fashion', emoji:'🧥', price:119, old:180, badge:'Hot', desc:'Classic style, premium leather.' },
+    { id:8, name:'Desk Lamp', cat:'home', emoji:'💡', price:39, old:null, badge:null, desc:'LED with adjustable brightness.' },
+  ];
+
+  function renderProducts(items) {
+    const grid = document.getElementById('products-grid');
+    grid.innerHTML = items.map(p => `
+      <div class="product-card" data-cat="${p.cat}">
+        <div class="product-img">
+          ${p.badge ? `<span class="product-badge ${p.badge==='Sale'?'sale':''}">${p.badge}</span>` : ''}
+          <span class="product-emoji">${p.emoji}</span>
+        </div>
+        <div class="product-info">
+          <div class="product-cat">${p.cat}</div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-desc">${p.desc}</div>
+          <div class="product-footer">
+            <div class="product-price">
+              $${p.price}
+              ${p.old ? `<span class="old">$${p.old}</span>` : ''}
             </div>
-            <div class="footer_section_2">
-               <div class="row">
-                  <div class="col-lg-3 col-sm-6">
-                     <h2 class="useful_text">Useful link </h2>
-                     <div class="footer_menu">
-                        <ul>
-                           <li><a href="index.html">Home</a></li>
-                           <li><a href="about.html">About</a></li>
-                           <li><a href="services.html">Services</a></li>
-                           <li><a href="sell.html">Sell</a></li>
-                           <li><a href="products.html">Products</a></li>
-                           <li><a href="contact.html">Contact Us</a></li>
-                        </ul>
-                     </div>
-                  </div>
-                  <div class="col-lg-3 col-sm-6">
-                     <h2 class="useful_text">Portfolio</h2>
-                     <div class="footer_menu">
-                        <ul>
-                           <li><a href="#">LIodeno</a></li>
-                           <li><a href="jokri.html">Jokri</a></li>
-                           <li><a href="begana.html">Begana</a></li>
-                           <li><a href="sell.html">Sell</a></li>
-                           <li><a href="products.html">Products</a></li>
-                           <li><a href="contact.html">Contact Us</a></li>
-                        </ul>
-                     </div>
-                  </div>
-                  <div class="col-lg-3 col-sm-6">
-                     <h2 class="useful_text">Contact Us</h2>
-                     <div class="location_text"><img src="/static/images/call-icon.png"><span class="padding_left_15"><a href="#">+01 1234567</a></span></div>
-                     <div class="location_text"><img src="/static/images/mail-icon.png"><span class="padding_left_15"><a href="#">demo@gmail.com</a></span></div>
-                  </div>
-                  <div class="col-lg-3 col-sm-6">
-                     <h2 class="useful_text">Social Link</h2>
-                     <p class="footer_text">It is a long established fact that a reader will be </p>
-                     <div class="social_icon">
-                        <ul>
-                           <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                           <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                           <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-                           <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                        </ul>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="input_main">
-               <input type="text" class="email_text" placeholder="Enter your email" name="Enter your email">
-               <div class="subscribe_bt"><a href="#">Subscribe</a></div>
-            </div>
-         </div>
+            <button class="add-btn" onclick="addToCart('${p.name}')">+</button>
+          </div>
+        </div>
       </div>
-      <!-- footer section end -->
-      <!-- copyright section start -->
-      <div class="copyright_section">
-         <div class="container">
-            <p class="copyright_text">2020 All Rights Reserved. Design by <a href="https://html.design">Free Html Templates</a> Distribution by <a href="https://themewagon.com">ThemeWagon</a></p>
-         </div>
-      </div>
-      <!-- copyright section end -->
-      <!-- Javascript files-->
-      <script src="/static/js/jquery.min.js"></script>
-      <script src="/static/js/popper.min.js"></script>
-      <script src="/static/js/bootstrap.bundle.min.js"></script>
-      <script src="/static/js/jquery-3.0.0.min.js"></script>
-      <script src="/static/js/plugin.js"></script>
-      <!-- sidebar -->
-      <script src="/static/js/jquery.mCustomScrollbar.concat.min.js"></script>
-      <script src="/static/js/custom.js"></script>
-      <!-- javascript --> 
-      <script>
-         // Material Select Initialization
-         $(document).ready(function() {
-         $('.mdb-select').materialSelect();
-         $('.select-wrapper.md-form.md-outline input.select-dropdown').bind('focus blur', function () {
-         $(this).closest('.select-outline').find('label').toggleClass('active');
-         $(this).closest('.select-outline').find('.caret').toggleClass('active');
-         });
-         });
-      </script>
-   </body>
+    `).join('');
+  }
+
+  function filterProducts(btn, cat) {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = cat;
+    const filtered = cat === 'all' ? products : products.filter(p => p.cat === cat);
+    renderProducts(filtered);
+  }
+
+  function sortProducts(val) {
+    let items = currentFilter === 'all' ? [...products] : products.filter(p => p.cat === currentFilter);
+    if (val === 'price-asc') items.sort((a,b) => a.price - b.price);
+    else if (val === 'price-desc') items.sort((a,b) => b.price - a.price);
+    else if (val === 'newest') items.reverse();
+    renderProducts(items);
+  }
+
+  function addToCart(name) {
+    cartCount++;
+    document.getElementById('cart-count').textContent = cartCount;
+    const toast = document.getElementById('toast');
+    toast.textContent = `"${name}" added to cart!`;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+  }
+
+  function openCart() {
+    alert(`You have ${cartCount} item(s) in your cart.`);
+  }
+
+  renderProducts(products);
+</script>
+</body>
 </html>

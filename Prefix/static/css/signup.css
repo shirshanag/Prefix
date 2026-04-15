@@ -76,3 +76,16 @@ form {
   input[type="submit"]:active {
     transform: translateY(1px);
   }
+  .btn-link {
+    display: inline-block;
+    background: navy;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .btn-link:hover {
+    background: royalblue;
+  }
