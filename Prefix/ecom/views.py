@@ -36,6 +36,7 @@ def login(request):
         b2=request.POST['password']
         obj=user_data.objects.filter(email=b1,password=b2)
         if obj:
+            request.session['user']=b1
             return redirect("/index/")
         else:
             return HttpResponse("Invalid Response")

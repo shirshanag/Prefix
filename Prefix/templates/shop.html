@@ -224,13 +224,13 @@
 <nav>
   <a href="#" class="logo">PREFIX</a>
   <ul class="nav-links">
-    <li><a href="#">Home</a></li>
-    <li><a href="#">About</a></li>
-    <li><a href="#">Pricing Plans</a></li>
-    <li><a href="#" class="active">Shop</a></li>
-    <li><a href="#">Services</a></li>
+    <li><a href="{% url 'index' %}">Home</a></li>
+    <li><a href="{% url 'about' %}">About</a></li>
+    <li><a href="{% url 'pricing'%}">Pricing Plans</a></li>
+    <li><a href="{% url 'shop' %}" class="active">Shop</a></li>
+    <li><a href="{% url 'services' %}">Services</a></li>
     <li><a href="#">Blog</a></li>
-    <li><a href="#">Contact</a></li>
+    <li><a href="{% url 'contact' %}">Contact</a></li>
   </ul>
   <div class="nav-right">
     <a href="#" class="btn-buy">Buy Now</a>
