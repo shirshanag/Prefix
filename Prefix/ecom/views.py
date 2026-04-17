@@ -1,12 +1,19 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import user_data
+from .models import contact_data
 # Create your views here.
 def index(request):
     return render(request,'index.html')
 def about(request):
     return render(request,'about.html')
 def contact(request):
+    if request.method=='POST':
+        u1=request.POST['Your_Name']
+        u2=request.POST['Email']
+        u3=request.POST['Message']
+        con_data=contact_data(Your_Name=u1,Email=u2,Message=u3)
+        con_data.save()
     return render(request,'contact.html')
 def pricing(request):
     return render(request,'pricing.html')

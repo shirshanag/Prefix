@@ -9,4 +9,9 @@ class user_data(models.Model):
     confirm_password=models.CharField()
     class Meta:
         db_table='user_data'
-
+class contact_data(models.Model):
+    Your_Name=models.CharField(max_length=100)
+    Email=models.EmailField()
+    Message=models.CharField(max_length=500)
+    class Meta:
+        db_table='contact_data'
