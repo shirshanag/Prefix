@@ -15,3 +15,15 @@ class contact_data(models.Model):
     Message=models.CharField(max_length=500)
     class Meta:
         db_table='contact_data'
+class  Product(models.Model):
+    name=models.CharField(max_length=100)
+    category=models.CharField(max_length=100)
+    price=models.IntegerField()
+    old=models.IntegerField(null=True,blank=True)
+    badge=models.CharField(max_length=20,null=True,blank=True)
+    description = models.TextField()
+    image = models.ImageField(upload_to="products/", null=True, blank=True)
+    def __str__(self):
+        return self.name
+
+

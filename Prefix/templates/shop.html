@@ -397,14 +397,18 @@
   let currentFilter = 'all';
 
   const products = [
-    { id:1, name:'Wireless Headphones', cat:'electronics', emoji:'🎧', price:79, old:129, badge:'New', desc:'Premium sound with ANC technology.' },
-    { id:2, name:'Running Shoes', cat:'fashion', emoji:'👟', price:59, old:99, badge:'Sale', desc:'Lightweight, breathable design.' },
-    { id:3, name:'Smart Watch', cat:'electronics', emoji:'⌚', price:149, old:199, badge:'Hot', desc:'Health tracking & notifications.' },
-    { id:4, name:'Coffee Maker', cat:'home', emoji:'☕', price:49, old:null, badge:null, desc:'Brew perfect coffee every time.' },
-    { id:5, name:'Yoga Mat', cat:'sports', emoji:'🧘', price:29, old:45, badge:'Sale', desc:'Non-slip, eco-friendly material.' },
-    { id:6, name:'Bluetooth Speaker', cat:'electronics', emoji:'🔊', price:89, old:null, badge:'New', desc:'360° sound, waterproof design.' },
-    { id:7, name:'Leather Jacket', cat:'fashion', emoji:'🧥', price:119, old:180, badge:'Hot', desc:'Classic style, premium leather.' },
-    { id:8, name:'Desk Lamp', cat:'home', emoji:'💡', price:39, old:null, badge:null, desc:'LED with adjustable brightness.' },
+  {% for product in products %}
+  {
+      id: {{ product.id }},
+      name: "{{ product.name }}",
+      cat: "{{ product.category|lower }}",
+      image: "{{ product.image.url }}",
+      price: {{ product.price }},
+      old: {{ product.old_price|default:"null" }},
+      badge: "{{ product.badge|default:'' }}",
+      desc: "{{ product.description|escapejs }}"
+  },
+  {% endfor %}
   ];
 
   function renderProducts(items) {
@@ -413,7 +417,7 @@
       <div class="product-card" data-cat="${p.cat}">
         <div class="product-img">
           ${p.badge ? `<span class="product-badge ${p.badge==='Sale'?'sale':''}">${p.badge}</span>` : ''}
-          <span class="product-emoji">${p.emoji}</span>
+          ${p.image ? `<img src="${p.image}" class="product-image">` : ''}
         </div>
         <div class="product-info">
           <div class="product-cat">${p.cat}</div>

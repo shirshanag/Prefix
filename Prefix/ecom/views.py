@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import user_data
 from .models import contact_data
+from .models import Product
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 def index(request):
     return render(request,'index.html')
@@ -19,8 +21,11 @@ def pricing(request):
     return render(request,'pricing.html')
 def services(request):
     return render(request,'services.html')
+@login_required(login_url='login')
+
 def shop(request):
-    return render(request,'shop.html')
+    products=Product.objects.all()
+    return render(request,'shop.html',{"products":products})
 def signup(request):
     if request.method=='POST':
         a1=request.POST['name']
