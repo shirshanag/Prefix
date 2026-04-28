@@ -78,7 +78,8 @@ WSGI_APPLICATION = 'Prefix.wsgi.application'
 
 import dj_database_url
 import os
-
+from dotenv import load_dotenv
+load_dotenv()
 
 DATABASES = {
     'default': dj_database_url.config(

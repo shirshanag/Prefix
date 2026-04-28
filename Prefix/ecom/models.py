@@ -5,8 +5,8 @@ class user_data(models.Model):
     name=models.CharField(max_length=100)
     email=models.EmailField()
     contact=models.CharField(max_length=10)
-    password=models.CharField(max_length=8)
-    confirm_password=models.CharField(max_length=8)
+    password=models.CharField(max_length=128)
+    confirm_password=models.CharField(max_length=128)
     class Meta:
         db_table='user_data'
 class contact_data(models.Model):
