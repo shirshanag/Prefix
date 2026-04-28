@@ -76,11 +76,11 @@ WSGI_APPLICATION = 'Prefix.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+import dj_database_url
+import os
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.parse(os.environ.get("postgresql://prefix_db_q5oh_user:F5NmldzbUsCRYZdQgjKsjceKQUKqonsq@dpg-d7of6ctckfvc73angv8g-a/prefix_db_q5oh"))
 }
 
 
