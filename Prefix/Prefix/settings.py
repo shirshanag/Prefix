@@ -79,10 +79,13 @@ WSGI_APPLICATION = 'Prefix.wsgi.application'
 import dj_database_url
 import os
 
-DATABASES = {
-  
 
-    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+DATABASES = {
+    'default': dj_database_url.config(
+        default=os.environ.get("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True  # Required on Render for Postgres
+    )
 }
 
 
