@@ -81,10 +81,8 @@ import os
 
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get("DATABASE_URL"),
-        conn_max_age=600,
-        ssl_require=True  # Required on Render for Postgres
+    'default': dj_database_url.parse(
+        os.environ.get("DATABASE_URL", "postgresql://prefix_db_q5oh_user:F5NmldzbUsCRYZdQgjKsjceKQUKqonsq@dpg-d7of6ctckfvc73angv8g-a/prefix_db_q5oh")
     )
 }
 
