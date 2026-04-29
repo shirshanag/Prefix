@@ -22,7 +22,7 @@ def pricing(request):
     return render(request,'pricing.html')
 def services(request):
     return render(request,'services.html')
-@login_required(login_url='login')
+
 
 def shop(request):
     if 'user' not in request.session:
@@ -52,7 +52,7 @@ def login(request):
     if request.method=='POST':
         b1=request.POST['email']
         b2=request.POST['password']
-        obj=user_data.objects.filter(email=b1,password=b2)
+        obj=user_data.objects.filter(email=b1,password=b2).first()
         if obj:
             request.session['user']=b1
             return redirect("/shop/")
