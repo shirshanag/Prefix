@@ -55,7 +55,7 @@ def login(request):
         obj=user_data.objects.filter(email=b1,password=b2)
         if obj:
             request.session['user']=b1
-            return redirect("/index/")
+            return redirect('shop')
         else:
             return HttpResponse("Invalid Response")
     return render(request,'login.html')
