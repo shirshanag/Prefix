@@ -30,7 +30,7 @@ urlpatterns = [
     path('shop/',views.shop,name="shop"),
     path('signup/',views.signup,name="signup"),
     path('login/',views.login,name="login"),
-    path('logout/', views.logout, name='logout'),
+    path('logout/', views.logout, name='logout')
 
 ]
 # ADD THIS BLOCK AT THE VERY BOTTOM
