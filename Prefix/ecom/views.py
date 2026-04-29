@@ -4,6 +4,7 @@ from .models import user_data
 from .models import contact_data
 from .models import Product
 from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 def index(request):
     return render(request,'index.html')
@@ -24,6 +25,8 @@ def services(request):
 @login_required(login_url='login')
 
 def shop(request):
+    if 'user' not in request.session:
+        return redirect('login')
     products=Product.objects.all()
     return render(request,'shop.html',{"products":products})
 def signup(request):
@@ -33,14 +36,17 @@ def signup(request):
         a3=request.POST['contact']
         a4=request.POST['password']
         a5=request.POST['confirm_password']
-        if a4!=a5:
-            return HttpResponse("Password an confirm password must be same")
-        if a1=="":
-            return HttpResponse("Name is an Important field")
-        if len(a4)<8:
-            return HttpResponse("Password must be atmost 8 character")
+        if a1 == "":
+            return render(request, 'signup.html', {'error': 'Name is a required field'})
+        if a4 != a5:
+            return render(request, 'signup.html', {'error': 'Password and confirm password must be same'})
+        if len(a4) < 8:
+            return render(request, 'signup.html', {'error': 'Password must be at least 8 characters'})
+        if user_data.objects.filter(email=a2).exists():         # ← prevents duplicate emails
+            return render(request, 'signup.html', {'error': 'Email already registered'})
         data=user_data(name=a1,email=a2,contact=a3,password=a4)
         data.save()
+        return redirect('login')
     return render(request,'signup.html')
 def login(request):
     if request.method=='POST':
@@ -53,3 +59,6 @@ def login(request):
         else:
             return HttpResponse("Invalid Response")
     return render(request,'login.html')
+def logout(request):
+    request.session.flush()   # ← clears session
+    return redirect('login')
